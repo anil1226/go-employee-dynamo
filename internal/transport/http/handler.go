@@ -8,17 +8,21 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/anil1226/go-employee-dynamo/internal/service"
 	"github.com/gorilla/mux"
 )
 
 type Handler struct {
-	Service *service.Service
+	Service CommService
 	Router  *mux.Router
 	Server  *http.Server
 }
 
-func NewHandler(service *service.Service) *Handler {
+type CommService interface {
+	EmpService
+	UserService
+}
+
+func NewHandler(service CommService) *Handler {
 	h := &Handler{
 		Service: service,
 	}

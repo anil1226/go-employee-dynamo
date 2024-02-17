@@ -10,7 +10,7 @@ import (
 )
 
 type UserService interface {
-	GetUser(context.Context, string) (models.User, error)
+	GetUser(context.Context, models.User) (models.User, error)
 	CreateUser(context.Context, models.User) error
 }
 
