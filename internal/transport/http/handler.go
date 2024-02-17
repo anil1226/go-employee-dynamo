@@ -7,13 +7,11 @@ import (
 	"os"
 	"os/signal"
 	"time"
-
-	"github.com/gorilla/mux"
 )
 
 type Handler struct {
 	Service CommService
-	Router  *mux.Router
+	Router  *http.ServeMux
 	Server  *http.Server
 }
 
@@ -26,7 +24,7 @@ func NewHandler(service CommService) *Handler {
 	h := &Handler{
 		Service: service,
 	}
-	h.Router = mux.NewRouter()
+	h.Router = http.NewServeMux()
 	h.mapRoutes()
 	h.Server = &http.Server{
 		Addr:    "0.0.0.0:8080",
@@ -37,13 +35,13 @@ func NewHandler(service CommService) *Handler {
 
 func (h *Handler) mapRoutes() {
 
-	h.Router.HandleFunc("/api/v1/employee", verifyJWT(h.CreateEmployee)).Methods(http.MethodPost)
-	h.Router.HandleFunc("/api/v1/employee/{id}", verifyJWT(h.GetEmployee)).Methods(http.MethodGet)
-	h.Router.HandleFunc("/api/v1/employee", verifyJWT(h.UpdateEmployee)).Methods(http.MethodPut)
-	h.Router.HandleFunc("/api/v1/employee/{id}", verifyJWT(h.DeleteEmployee)).Methods(http.MethodDelete)
+	h.Router.HandleFunc("POST /api/v1/employee", verifyJWT(h.CreateEmployee))
+	h.Router.HandleFunc("GET /api/v1/employee/{id}", verifyJWT(h.GetEmployee))
+	h.Router.HandleFunc("PUT /api/v1/employee", verifyJWT(h.UpdateEmployee))
+	h.Router.HandleFunc("DELETE /api/v1/employee/{id}", verifyJWT(h.DeleteEmployee))
 
-	h.Router.HandleFunc("/api/v1/user", h.CreateUser).Methods(http.MethodPost)
-	h.Router.HandleFunc("/api/v1/signin", h.GetUser).Methods(http.MethodPost)
+	h.Router.HandleFunc("POST /api/v1/user", h.CreateUser)
+	h.Router.HandleFunc("POST /api/v1/signin", h.GetUser)
 }
 
 func (h *Handler) Serve() error {

@@ -7,7 +7,6 @@ import (
 	"net/http"
 
 	"github.com/anil1226/go-employee-dynamo/internal/models"
-	"github.com/gorilla/mux"
 )
 
 type EmpService interface {
@@ -41,8 +40,7 @@ func (h *Handler) CreateEmployee(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) GetEmployee(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
+	id := r.PathValue("id")
 
 	if id == "" {
 		w.WriteHeader(http.StatusBadRequest)
@@ -82,8 +80,7 @@ func (h *Handler) UpdateEmployee(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) DeleteEmployee(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
+	id := r.PathValue("id")
 
 	if id == "" {
 		w.WriteHeader(http.StatusBadRequest)

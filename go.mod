@@ -1,11 +1,10 @@
 module github.com/anil1226/go-employee-dynamo
 
-go 1.21.4
+go 1.22
 
 require (
-	github.com/aws/aws-sdk-go v1.50.17
+	github.com/aws/aws-sdk-go v1.50.20
 	github.com/golang-jwt/jwt v3.2.2+incompatible
-	github.com/gorilla/mux v1.8.1
 	github.com/joho/godotenv v1.5.1
 	github.com/satori/go.uuid v1.2.0
 	golang.org/x/crypto v0.19.0

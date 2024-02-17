@@ -30,7 +30,7 @@ func NewDatabase() (*Database, error) {
 		Credentials: credentials.NewSharedCredentials("", "default"), // Use the default credentials profile
 	})
 	if err != nil {
-		log.Fatalf("Error creating session:", err)
+		log.Fatal("Error creating session:", err)
 
 	}
 
